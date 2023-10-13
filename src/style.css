@@ -84,7 +84,7 @@
 }
 
 .birdMove {
-  animation: birdMove 4.5s linear infinite;
+  animation: birdMove 1.5s linear infinite;
 }
 
 @keyframes birdMove {
