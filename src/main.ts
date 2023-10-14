@@ -6,9 +6,14 @@ const dino = document.getElementById("dino");
 const cactus = document.getElementById("cactus");
 const bird = document.getElementById("bird");
 
+const dinoCac: number = 150;
+const cactusColl: number = 7;
+const dinoBird: number = 55;
+const birdColli: number = 11;
+
 const scoreText = document.getElementById("scoreText");
 let score = 0;
-SetText("click to start!");
+setText("click to start!");
 
 var isJumping = false;
 let gameOver = true;
@@ -22,10 +27,10 @@ setInterval(function () {
 function Main() {
   if (gameOver == false) {
     score += 1;
-    SetText("Score: " + score);
+    setText("Score: " + score);
 
-    requestAnimationFrame(CheckGameOver);
-    CheckGameOver();
+    requestAnimationFrame(checkGameOver);
+    checkGameOver();
   }
 }
 
@@ -37,7 +42,7 @@ function jump() {
       setTimeout(RemoveJump, 500);
     }
   } else {
-    StartGame();
+    startGame();
   }
 }
 
@@ -56,7 +61,7 @@ function GetPosition(object: HTMLElement, position: string) {
   return parseInt(window.getComputedStyle(object).getPropertyValue(position));
 }
 
-function CheckGameOver() {
+function checkGameOver() {
   if (gameOver == false && dino != null && cactus != null && bird != null) {
     //get is dinosaur jumping
     let dinoTop = GetPosition(dino, "top");
@@ -68,10 +73,10 @@ function CheckGameOver() {
     let birdLeft = GetPosition(bird, "left");
 
     //detect cactus collision
-    if (dinoTop >= 150 && Math.abs(cactusLeft) < 7) {
+    if (dinoTop >= dinoCac && Math.abs(cactusLeft) < cactusColl) {
       //end game
       console.log("player died!");
-      SetText("Final Score: " + score + "! Click To Play Again!");
+      setText("Final Score: " + score + "! Click To Play Again!");
       gameOver = true;
 
       //reset player
@@ -82,10 +87,10 @@ function CheckGameOver() {
     }
 
     //detect bird collision
-    if (dinoTop <= 55 && Math.abs(birdLeft) < 11) {
+    if (dinoTop <= dinoBird && Math.abs(birdLeft) < birdColli) {
       //end game
       console.log("player died!");
-      SetText("Final Score: " + score + "! Click To Play Again!");
+      setText("Final Score: " + score + "! Click To Play Again!");
       gameOver = true;
 
       //reset player
@@ -95,10 +100,9 @@ function CheckGameOver() {
       RemoveObstacles();
     }
   }
-  requestAnimationFrame(CheckGameOver);
 }
 
-function StartGame() {
+function startGame() {
   console.log("Game started!");
   gameOver = false;
   score = 0;
@@ -106,7 +110,7 @@ function StartGame() {
   bird?.classList.add("birdMove");
 }
 
-function SetText(s: string) {
+function setText(s: string) {
   if (scoreText) {
     scoreText.textContent = s;
   }
